@@ -1,5 +1,5 @@
 import React from 'react'
-import {screen, render} from '@testing-library/react'
+import {screen, render, fireEvent} from '@testing-library/react'
 import Conta from './Conta'
 
 describe("Componente de conta",()=>{
@@ -9,5 +9,15 @@ describe("Componente de conta",()=>{
 
     
     expect(saldoConta.textContent).toBe("R$ 100")
+  })
+  it("Chama a função de realizar transação quando o botão é clicado", () =>{
+    const funcaoRealizarTransacao = jest.fn()
+    render(<Conta saldo={100}  realizarTransacao={funcaoRealizarTransacao}/>)
+
+    fireEvent.click(screen.getByText("Realizar operação"))
+
+    expect(funcaoRealizarTransacao).toHaveBeenCalled()
+
+
   })
 })

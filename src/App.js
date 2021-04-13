@@ -28,13 +28,15 @@ function App() {
   }
 
   function realizarTransacao(valores) {  
-    const novoSaldo = calcularNovoSaldo(valores, saldo);
+    if(valores.transacao === "saque" && valores.valor > saldo) return
 
+    const novoSaldo = calcularNovoSaldo(valores, saldo);
     api.atualizaSaldo(novoSaldo).catch((error) => console.error(error))
     api.atualizaTransacoes(valores).catch((error) => console.error(error))
     
     atualizarSaldo(novoSaldo);
     atualizarTransacoes([valores]);
+  
   }
 
   useEffect(() => {
